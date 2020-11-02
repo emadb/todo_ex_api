@@ -16,7 +16,7 @@ defmodule TodoApi.RouterTest do
     end
   end
 
-  test "POST /todo should save to database" do
+  test "POST /todo should return the todo" do
 
     todo = %{text: "prova numero 1"}
 
@@ -32,15 +32,17 @@ defmodule TodoApi.RouterTest do
     assert id > 0
   end
 
-  # test "POST /todo should save to database" do
+  test "POST /todo should save to database" do
 
-  #   todo = %{text: "prova numero 2"}
+    todo = %{text: "prova numero 2"}
 
-  #   conn =
-  #     conn(:post, "/todo", todo)
-  #     |> put_req_header("content-type", "application/json")
-  #     |> TodoApi.Router.call(TodoApi.Router.init([]))
+    conn =
+      conn(:post, "/todo", todo)
+      |> put_req_header("content-type", "application/json")
+      |> TodoApi.Router.call(TodoApi.Router.init([]))
 
+    res = TodoApi.Repo.get_by(TodoApi.Schema.Todo, [text: "prova numero 2"])
+    assert !is_nil(res)
 
-  # end
+  end
 end
