@@ -43,6 +43,16 @@ defmodule TodoApi.RouterTest do
 
     res = TodoApi.Repo.get_by(TodoApi.Schema.Todo, [text: "prova numero 2"])
     assert !is_nil(res)
+  end
 
+  test "GET /todo should return all todos" do
+    conn =
+      conn(:get, "/todo")
+      |> put_req_header("content-type", "application/json")
+      |> TodoApi.Router.call(TodoApi.Router.init([]))
+
+    res = Jason.decode!(conn.resp_body)
+
+    assert Enum.count(res) > 0
   end
 end

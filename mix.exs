@@ -18,7 +18,13 @@ defmodule TodoApi.MixProject do
 
   defp aliases do
     [
-     test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: [
+        "ecto.drop --quiet",
+        "ecto.create --quiet",
+        "ecto.migrate --quiet",
+        "run test/seed.exs",
+        "test"
+      ]
     ]
   end
 
