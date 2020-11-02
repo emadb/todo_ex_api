@@ -42,7 +42,8 @@ defmodule TodoApi.MixProject do
       {:plug_cowboy, "~> 2.4"},
       {:jason, "~> 1.2"},
       {:ecto_sql, "~> 3.5"},
-      {:postgrex, "~> 0.15.7"}
+      {:postgrex, "~> 0.15.7"},
+      {:ex_json_schema, "~> 0.7.4"}
     ]
   end
 end

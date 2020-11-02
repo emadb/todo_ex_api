@@ -15,6 +15,18 @@ defmodule TodoApi.RouterTest do
       assert res == %{"message" => "pong"}
     end
   end
+  test "POST /todo wrong format return 400" do
+    todo = %{no_text: "prova numero 1"}
+
+    conn =
+      conn(:post, "/todo", todo)
+      |> put_req_header("content-type", "application/json")
+      |> TodoApi.Router.call(TodoApi.Router.init([]))
+
+    assert conn.status == 400
+  end
+
+
 
   test "POST /todo should return the todo" do
 

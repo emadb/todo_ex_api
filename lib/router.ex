@@ -5,22 +5,26 @@ defmodule TodoApi.Router do
   plug :dispatch
 
   get "/ping" do
-    send_json_resp(conn, 200, Jason.encode!(%{message: "pong"}))
+    send_json_resp(conn, 200, %{message: "pong"})
   end
 
   post "/todo" do
-    response = %TodoApi.Schema.Todo{text: conn.body_params["text"]}
-      |> TodoApi.Repo.insert!()
-      |> project()
-      |> Jason.encode!()
+    case TodoApi.Validator.create_todo(conn.body_params) do
+      {:ok, todo } -> response = todo
+        |> TodoApi.Repo.insert!()
+        |> project()
 
-    send_json_resp(conn, 201, response)
+        send_json_resp(conn, 201, response)
+      {:error, _} ->
+        send_json_resp(conn, 400, %{message: "bad format"})
+    end
+
   end
 
   get "/todo" do
     todos = TodoApi.Repo.all(TodoApi.Schema.Todo)
     |> Enum.map(&project/1)
-    send_json_resp(conn, 200, Jason.encode!(todos))
+    send_json_resp(conn, 200, todos)
   end
 
   defp project(%TodoApi.Schema.Todo{id: id, text: text}) do
@@ -30,7 +34,7 @@ defmodule TodoApi.Router do
   defp send_json_resp(conn, status, body) do
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(status, body)
+    |> send_resp(status, Jason.encode!(body))
   end
 
 end
