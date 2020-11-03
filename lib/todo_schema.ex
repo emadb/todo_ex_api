@@ -3,6 +3,7 @@ defmodule TodoApi.Schema.Todo do
 
   schema "todos" do
     field :text, :string
+    field :is_complete, :boolean
     timestamps()
   end
 end

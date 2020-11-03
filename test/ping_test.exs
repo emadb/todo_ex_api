@@ -67,4 +67,16 @@ defmodule TodoApi.RouterTest do
 
     assert Enum.count(res) > 0
   end
+
+  test "PATCH /todo/:id mark as complete" do
+    body = %{op: "mark-complete"}
+
+    conn =
+      conn(:patch, "/todo/1001", body)
+      |> put_req_header("content-type", "application/json")
+      |> TodoApi.Router.call(TodoApi.Router.init([]))
+
+    res = TodoApi.Repo.get(TodoApi.Schema.Todo, 1001)
+    assert res.is_complete
+  end
 end
