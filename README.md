@@ -1,21 +1,8 @@
-# TodoApi
+# TodoApi: a simple kata for learning how to create an API in Elixir
 
-**TODO: Add description**
+To run the test you need to install [Elixir](https://elixir-lang.org) and start the docker compose to boot the database (postegresql).  
+Then run `mix deps.get` from the terminal to install all the needed dependencies.  
+Finally you can run the tests using `mix test`. All test should be green!  
+The tests are all in the `ping_test.ex` file.  
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `todo_api` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:todo_api, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/todo_api](https://hexdocs.pm/todo_api).
-
+Happy coding!
