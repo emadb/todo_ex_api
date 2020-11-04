@@ -18,6 +18,7 @@ defmodule TodoApi.MixProject do
 
   defp aliases do
     [
+      credo: ["credo --config-name pick_in_car --strict"],
       test: [
         "ecto.drop --quiet",
         "ecto.create --quiet",
@@ -43,7 +44,8 @@ defmodule TodoApi.MixProject do
       {:jason, "~> 1.2"},
       {:ecto_sql, "~> 3.5"},
       {:postgrex, "~> 0.15.7"},
-      {:ex_json_schema, "~> 0.7.4"}
+      {:ex_json_schema, "~> 0.7.4"},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
     ]
   end
 end

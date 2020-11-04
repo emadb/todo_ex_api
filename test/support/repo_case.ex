@@ -1,6 +1,6 @@
 defmodule TodoApi.RepoCase do
   use ExUnit.CaseTemplate
-
+  alias Ecto.Adapters.SQL.Sandbox
   using do
     quote do
       alias TodoApi.Repo
@@ -14,10 +14,10 @@ defmodule TodoApi.RepoCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(TodoApi.Repo)
+    :ok = Sandbox.checkout(TodoApi.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(TodoApi.Repo, {:shared, self()})
+      Sandbox.mode(TodoApi.Repo, {:shared, self()})
     end
 
     :ok
