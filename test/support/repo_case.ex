@@ -1,6 +1,7 @@
 defmodule TodoApi.RepoCase do
   use ExUnit.CaseTemplate
   alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       alias TodoApi.Repo
