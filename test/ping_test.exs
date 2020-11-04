@@ -3,12 +3,14 @@ defmodule TodoApi.RouterTest do
   use Plug.Test
   use TodoApi.RepoCase
 
+  @opt TodoApi.Router.init([])
+
   describe "Main router" do
     test "GET /ping should return pong" do
       conn =
         conn(:get, "/ping")
         |> put_req_header("content-type", "application/json")
-        |> TodoApi.Router.call(TodoApi.Router.init([]))
+        |> TodoApi.Router.call(@opt)
 
       res = Jason.decode!(conn.resp_body)
 
@@ -21,7 +23,7 @@ defmodule TodoApi.RouterTest do
     conn =
       conn(:post, "/todo", todo)
       |> put_req_header("content-type", "application/json")
-      |> TodoApi.Router.call(TodoApi.Router.init([]))
+      |> TodoApi.Router.call(@opt)
 
     assert conn.status == 400
   end
@@ -35,7 +37,7 @@ defmodule TodoApi.RouterTest do
     conn =
       conn(:post, "/todo", todo)
       |> put_req_header("content-type", "application/json")
-      |> TodoApi.Router.call(TodoApi.Router.init([]))
+      |> TodoApi.Router.call(@opt)
 
     assert conn.status == 201
     res = Jason.decode!(conn.resp_body)
@@ -48,10 +50,9 @@ defmodule TodoApi.RouterTest do
 
     todo = %{text: "prova numero 2"}
 
-    conn =
       conn(:post, "/todo", todo)
       |> put_req_header("content-type", "application/json")
-      |> TodoApi.Router.call(TodoApi.Router.init([]))
+      |> TodoApi.Router.call(@opt)
 
     res = TodoApi.Repo.get_by(TodoApi.Schema.Todo, [text: "prova numero 2"])
     assert !is_nil(res)
@@ -61,7 +62,7 @@ defmodule TodoApi.RouterTest do
     conn =
       conn(:get, "/todo")
       |> put_req_header("content-type", "application/json")
-      |> TodoApi.Router.call(TodoApi.Router.init([]))
+      |> TodoApi.Router.call(@opt)
 
     res = Jason.decode!(conn.resp_body)
 
@@ -71,10 +72,9 @@ defmodule TodoApi.RouterTest do
   test "PATCH /todo/:id mark as complete" do
     body = %{op: "mark-complete"}
 
-    conn =
       conn(:patch, "/todo/1001", body)
       |> put_req_header("content-type", "application/json")
-      |> TodoApi.Router.call(TodoApi.Router.init([]))
+      |> TodoApi.Router.call(@opt)
 
     res = TodoApi.Repo.get(TodoApi.Schema.Todo, 1001)
     assert res.is_complete

@@ -9,4 +9,6 @@ config :todo_api, TodoApi.Repo,
   password: "postgres",
   hostname: "localhost"
 
+config :logger, level: :info
+
 import_config "#{Mix.env()}.exs"
